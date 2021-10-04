@@ -1,11 +1,38 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import createAsyncSlice from "./helper/createAsyncSlice";
+import getLocalStorage from './helper/getLocalStorage';
 
 
 
 
 const token = createAsyncSlice({
     name: 'token',
+    initialState: {
+        data: {
+            token: getLocalStorage('token', null)
+        }
+    },
+    reducers: {
+        fetchSuccess: {
+            reducer(state, action) {
+                state.loading = false
+                state.data = action.payload
+                state.error = null
+            },
+            //adiciona token para o middleware do localStorage
+            prepare(payload){
+                return {
+                    payload,
+                    meta: {
+                        localStorage: {
+                            key: 'token',
+                            value: payload.token
+                        }
+                    }
+                }
+            }
+        }
+    },
     fetchConfig: (payload) => ({
         url: 'https://dogsapi.origamid.dev/json/jwt-auth/v1/token',
         options: {

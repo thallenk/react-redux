@@ -20,6 +20,7 @@ const createAsyncSlice = (config) => {
             loading: false,
             data: null,
             error: null,
+            //caso eu mude a config do initialState, ele realoca:
             ...config.initialState
         },
         reducers: {

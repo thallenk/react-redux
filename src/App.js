@@ -1,13 +1,19 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "./store/login"; 
+import {autoLogin, login } from "./store/login"; 
 import { somar } from './store/contador'
 
 function App() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
   const dispatch = useDispatch()
+
+  //ativar autologin
+  React.useEffect(() => {
+    dispatch(autoLogin())
+  }, [dispatch])
+
+
   const { data } = useSelector((state) => state.login.user)
   function handleSubmit(e) {
     e.preventDefault()

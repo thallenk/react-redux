@@ -74,6 +74,13 @@ export const login = (user) => async (dispatch) => {
     }
 }
 
+//auto login para verificar se existe o token
+export const autoLogin = () => async (dispatch, getState) => {
+    const state = getState()
+    const { token } = state.login.token.data
+    if(token) await dispatch(fetchUser(token))
+}
+
 //forma mais trabalhosa
 // const slice = createSlice({
 //     name: 'login',
